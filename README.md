@@ -1,6 +1,6 @@
 <p align="center"><img src="https://avatars1.githubusercontent.com/u/43827489?s=400&u=45ac0ac47d40b6d8f277c96bdf00244c10508aef&v=4"/></p>
 <p align="center">
-    <a href="https://www.npmjs.com/package/nestjs-amqp"><img src="https://img.shields.io/npm/v/nestjs-amqp.svg"/></a>
+    <a href="https://www.npmjs.com/package/@sawakaga/nestjs-amqplib"><img src="https://img.shields.io/badge/version-0.2.1-orange"/></a>
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sawakaga_nestjs-amqp&metric=sqale_rating"/>
     <a href="https://github.com/sawakaga/nestjs-amqp/blob/master/LICENSE"><img src="https://img.shields.io/badge/lisense-MIT-brightgreen"/></a>
     <img src="https://flat.badgen.net/dependabot/nestjsx/nestjs-config?icon=dependabot" />
