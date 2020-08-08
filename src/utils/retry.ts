@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { retryWhen, scan, delay } from 'rxjs/operators';
 import { Logger } from '@nestjs/common';
+import { connect } from 'amqplib';
 
 export default function retry(
   retryAttempts: number = 3,

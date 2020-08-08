@@ -1,7 +1,7 @@
-import {Module, DynamicModule, Provider, OnModuleDestroy} from '@nestjs/common';
+import { Module, DynamicModule, Provider, OnModuleDestroy } from '@nestjs/common';
 import { AmqpOptionsInterface, AmqpAsyncOptionsInterface, AmqpOptionsObjectInterface } from './interfaces';
 import { createConnectionToken, createOptionsToken } from './utils/create.tokens';
-import {from} from 'rxjs';
+import { from } from 'rxjs';
 import * as amqp from 'amqplib';
 import retry from './utils/retry';
 import { AMQP_OPTIONS_PROVIDER, } from './amqp.constants';
@@ -11,7 +11,7 @@ import { ModuleRef } from '@nestjs/core';
 export class AmqpModule implements OnModuleDestroy {
   private static connectionNames: string[] = [];
 
-  constructor(private readonly moduleRef: ModuleRef) {}
+  constructor(private readonly moduleRef: ModuleRef) { }
 
   public static forRoot(options: AmqpOptionsInterface | AmqpOptionsInterface[]): DynamicModule {
 
@@ -22,8 +22,8 @@ export class AmqpModule implements OnModuleDestroy {
 
     optionsProviders.push(this.createOptionsProvider(options));
 
-    options.forEach(options => {  
-      connectionProviders.push(this.createConnectionProvider(options));
+    options.forEach((option) => {
+      connectionProviders.push(this.createConnectionProvider(option));
     });
 
     return {
@@ -43,7 +43,7 @@ export class AmqpModule implements OnModuleDestroy {
   }
 
   public static forRootAsync(options: AmqpAsyncOptionsInterface): DynamicModule {
-    
+
     AmqpModule.connectionNames.push(createConnectionToken('default'));
 
     const connectionProviders = [
@@ -72,8 +72,8 @@ export class AmqpModule implements OnModuleDestroy {
     const optionsObject: AmqpOptionsObjectInterface = {};
 
     if (Array.isArray(options)) {
-      options.forEach((options) => {
-        optionsObject[options.name] = options;
+      options.forEach((option) => {
+        optionsObject[option.name] = option;
       });
     }
 
@@ -93,16 +93,16 @@ export class AmqpModule implements OnModuleDestroy {
     };
   }
 
-  private static resolveOptions(options: AmqpOptionsInterface|AmqpOptionsInterface[]): AmqpOptionsInterface[] {
+  private static resolveOptions(options: AmqpOptionsInterface | AmqpOptionsInterface[]): AmqpOptionsInterface[] {
     if (!Array.isArray(options) && !options.hasOwnProperty('name')) options.name = 'default';
 
     if (!Array.isArray(options)) {
       options = [options];
     }
 
-    options.forEach((options, key) => {
-      if (!options.hasOwnProperty('name')) {
-        options.name = key.toString();
+    options.forEach((option, key) => {
+      if (!option.hasOwnProperty('name')) {
+        option.name = key.toString();
       }
     });
 

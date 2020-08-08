@@ -6,17 +6,14 @@
     "amqp"
   ],
   "main": "dist/index.js",
-  "author": {
-    "name": "sawakaga",
-    "url": "https://github.com/sawakaga",
-    "email": "mrtanilgrn@gmail.com"
-  },
-  "version": "0.2.0",
+  "author": "sawakaga <mrtanilgrn@gmail.com> (https://github.com/sawakaga)",
+  "version": "0.2.1",
   "license": "MIT",
   "devDependencies": {
     "@nestjs/common": "^7.4.2",
     "@nestjs/core": "^7.4.2",
     "@nestjs/testing": "^7.0.0",
+    "@nestjs/platform-express": "^7.4.2",
     "@types/amqplib": "^0.5.13",
     "@types/jest": "^24.0.15",
     "@types/node": "^14.0.26",
@@ -27,7 +24,6 @@
   },
   "dependencies": {
     "amqplib": "^0.5.6",
-    "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1"
   },
   "scripts": {
@@ -35,11 +31,11 @@
     "coverage": "jest --coverage",
     "test": "jest",
     "format": "prettier **/**/*.ts --ignore-path ./.prettierignore --write && git status",
-    "prepublish": "npm run format && npm run build"
+    "prepare": "npm run format && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sawakaga/nestjs-amqp.git"
+    "url": "git+https://github.com/sawakaga/nestjs-amqp.git"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -53,5 +49,9 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "./coverage"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/sawakaga/nestjs-amqp/issues"
+  },
+  "homepage": "https://github.com/sawakaga/nestjs-amqp#readme"
 }
