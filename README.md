@@ -1,6 +1,6 @@
 <p align="center"><img src="https://avatars1.githubusercontent.com/u/43827489?s=400&u=45ac0ac47d40b6d8f277c96bdf00244c10508aef&v=4"/></p>
 <p align="center">
-    <a href="https://www.npmjs.com/package/@sawakaga/nestjs-amqplib"><img src="https://img.shields.io/badge/version-0.2.1-orange"/></a>
+    <a href="https://www.npmjs.com/package/@sawakaga/nestjs-amqplib"><img src="https://img.shields.io/badge/version-0.2.3-green"/></a>
     <img src="https://sonarcloud.io/api/project_badges/measure?project=sawakaga_nestjs-amqp&metric=sqale_rating"/>
     <a href="https://github.com/sawakaga/nestjs-amqp/blob/master/LICENSE"><img src="https://img.shields.io/badge/lisense-MIT-brightgreen"/></a>
     <img src="https://flat.badgen.net/dependabot/nestjsx/nestjs-config?icon=dependabot" />
@@ -11,9 +11,12 @@
 
 <p align="center">An AMQP connection service for <a href="https://github.com/nestjs/nest">NestJS</a>.</p>
 
-This source code forked from semi-dead useful repository nestjsx/nestjs-amqp authored and maintained by @bashleigh
+This source code forked from semi-dead useful repository nestjsx/nestjs-amqp
+authored and maintained by @bashleigh
 
-This repository intents to bring full functionality of <a href="https://github.com/squaremo/amqp.node">amqplib</a> to nestjs module base.
+This repository intents to bring full functionality of
+<a href="https://github.com/squaremo/amqp.node">amqplib</a> to nestjs module
+base.
 
 ## Install
 
@@ -21,53 +24,55 @@ This repository intents to bring full functionality of <a href="https://github.c
 $ npm install --save sawakaga/nestjs-amqp
 ```
 
-## Basic usage 
+## Basic usage
 
 ```ts
-import {Module} from '@nestjs/common';
-import {AmqpModule} from 'nestjs-amqp';
+import { Module } from '@nestjs/common';
+import { AmqpModule } from 'nestjs-amqp';
 
 @Module({
-  imports: [AmqpModule.forRoot({
-    name: 'rabbitmq',
-    hostname: 'localhost',
-    port: 5672,
-    username: 'test',
-    password: 'test',
-  })],
+  imports: [
+    AmqpModule.forRoot({
+      name: 'rabbitmq',
+      hostname: 'localhost',
+      port: 5672,
+      username: 'test',
+      password: 'test',
+    }),
+  ],
 })
 export default class AppModule {}
-
 ```
 
 ## Connection Decorators
 
 ```ts
-import {Module} from '@nestjs/common';
-import {AmqpModule} from 'nestjs-amqp';
+import { Module } from '@nestjs/common';
+import { AmqpModule } from 'nestjs-amqp';
 
 @Module({
-  imports: [AmqpModule.forRoot([
-    {
-      hostname: 'test:test@localhost',
-    }, 
-    {
-      username: 'test',
-      password: 'test',
-      hostname: 'localhost',
-      port: 5672,
-      protocol: 'amqps',
-      name: 'test',
-    }
-  ])],
+  imports: [
+    AmqpModule.forRoot([
+      {
+        hostname: 'test:test@localhost',
+      },
+      {
+        username: 'test',
+        password: 'test',
+        hostname: 'localhost',
+        port: 5672,
+        protocol: 'amqps',
+        name: 'test',
+      },
+    ]),
+  ],
 })
-export default class ExecutionModule {
-}
+export default class ExecutionModule {}
 ```
 
 ```ts
-import {Injectable} from '@nestjs/common';
-import {InjectAmqpConnection} from 'nestjs-amqp';
+import { Injectable } from '@nestjs/common';
+import { InjectAmqpConnection } from 'nestjs-amqp';
 
 @Injectable()
 export default class TestService {
@@ -77,18 +82,19 @@ export default class TestService {
   ) {}
 }
 ```
+
 > Use InjectAmqpConnection without a parameter for default connection
 
-### Example publish 
+### Example publish
 
 ```ts
-import {Injectable, Logger} from '@nestjs/common';
-import {InjectAmqpConnection} from 'nestjs-amqp';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectAmqpConnection } from 'nestjs-amqp';
 
 @Injectable()
 export default class TestProvider {
   constructor(@InjectAmqpConnection() private readonly amqp) {}
-  async publish(message: string)  {
+  async publish(message: string) {
     await this.amqp.createChannel((err, channel) => {
       if (err != null) {
         Logger.alert(err, 'TestProvider');
@@ -99,28 +105,29 @@ export default class TestProvider {
   }
 }
 ```
-More information and examples about amqplib can be found [here](https://www.npmjs.com/package/amqplib).
+
+More information and examples about amqplib can be found
+[here](https://www.npmjs.com/package/amqplib).
 
 ## Available Options
 
-Name | For | Default
---- | --- | ---
-hostname | The host url for the connection | `localhost`
-port | The port of the amqp host | `5672`
-name | The name of the connection | `default` or the array key index `[0]`
-retrys | The amount of retry attempts before surrender | 3
-retryDelay | The amount of milliseconds to wait before attempting retry | 3000
-protocol | The protocol for the connection | `amqp`
-username | The username for the connection | `quest`
-password | The password for the connection | `quest`
-locale | The desired locale for error messages | `en_US`
-frameMax | The size in bytes of the maximum frame allowed over the connection | 0
-heartbeat | The period of the connection heartbeat in seconds | 0
-vhost | What VHost shall be used | `/`
+| Name       | For                                                                | Default                                |
+| ---------- | ------------------------------------------------------------------ | -------------------------------------- |
+| hostname   | The host url for the connection                                    | `localhost`                            |
+| port       | The port of the amqp host                                          | `5672`                                 |
+| name       | The name of the connection                                         | `default` or the array key index `[0]` |
+| retrys     | The amount of retry attempts before surrender                      | 3                                      |
+| retryDelay | The amount of milliseconds to wait before attempting retry         | 3000                                   |
+| protocol   | The protocol for the connection                                    | `amqp`                                 |
+| username   | The username for the connection                                    | `quest`                                |
+| password   | The password for the connection                                    | `quest`                                |
+| locale     | The desired locale for error messages                              | `en_US`                                |
+| frameMax   | The size in bytes of the maximum frame allowed over the connection | 0                                      |
+| heartbeat  | The period of the connection heartbeat in seconds                  | 0                                      |
+| vhost      | What VHost shall be used                                           | `/`                                    |
 
 ## Testing this package
 
 ```bash
 $ jest
 ```
-
