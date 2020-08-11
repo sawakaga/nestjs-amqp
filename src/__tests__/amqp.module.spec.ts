@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AmqpModule } from './index';
-import { createConnectionToken } from './utils/create.tokens';
+import { AmqpModule } from './../index';
+import { createConnectionToken } from '../utils/create.tokens';
 import { Module } from '@nestjs/common';
-import * as ChannelModel from "amqplib/lib/channel_model";
+const ChannelModel = require('amqplib/lib/channel_model').ChannelModel;
+import * as path from 'path';
+import { InjectAmqpConnection } from '../decorators';
 
 describe('AmqpModule', () => {
   it('Instace Amqp', async () => {
@@ -10,7 +12,7 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot({
           name: 'instance',
-          hostname: 'localhost',
+          hostname: process.env.HOST,
           retrys: 1,
         }),
       ],
@@ -31,7 +33,7 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot({
           name: 'first',
-          hostname: 'localhost',
+          hostname: process.env.HOST,
           retrys: 1,
         }),
       ],
@@ -51,12 +53,12 @@ describe('AmqpModule', () => {
       imports: [
         AmqpModule.forRoot([
           {
-            hostname: 'localhost',
+            hostname: process.env.HOST,
             name: 'test',
             retrys: 1,
           },
           {
-            hostname: 'localhost',
+            hostname: process.env.HOST,
             retrys: 1,
           },
         ]),
@@ -78,11 +80,11 @@ describe('AmqpModule', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AmqpModule.forRoot({
-          hostname: 'localhost',
+          hostname: process.env.HOST,
           name: 'test2',
-          port: 5672,
-          username: 'guest',
-          password: 'guest',
+          port: 5673,
+          username: 'user',
+          password: 'pass',
           retrys: 1,
         }),
       ],
@@ -98,11 +100,10 @@ describe('AmqpModule', () => {
   });
 
   it('Connection available in submodule', async () => {
-
     @Module({
       imports: [AmqpModule.forFeature()],
     })
-    class SubModule { }
+    class SubModule {}
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -128,7 +129,7 @@ describe('AmqpModule', () => {
 
   // it('Connections should build with AmqpAsyncOptionsInterface', async () => {
   //   class TestProvider {
-  //     constructor(@InjectAmqpConnection() private readonly amqp) { }
+  //     constructor(@InjectAmqpConnection() private readonly amqp) {}
 
   //     getAmqp() {
   //       return this.amqp;

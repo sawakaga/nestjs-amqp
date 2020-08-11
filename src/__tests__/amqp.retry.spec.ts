@@ -1,4 +1,4 @@
-import retry from './retry';
+import retry from '../utils/retry';
 import { from } from 'rxjs';
 import * as amqp from 'amqplib';
 
@@ -9,8 +9,8 @@ describe('Amqp Retry', () => {
     try {
       const result = await from(
         amqp.connect({
-          hostname: 'localhost',
-          port: 5672,
+          hostname: 'notathing',
+          port: 3444,
         }),
       )
         .pipe(retry())
